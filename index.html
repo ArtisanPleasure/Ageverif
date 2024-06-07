@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artisan Pleasure - Age Verification</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -34,6 +33,9 @@
             color: white;
             width: calc(100% - 24px);
         }
+        input[type="checkbox"] {
+            margin-top: 10px;
+        }
         button {
             padding: 10px 20px;
             border: none;
@@ -50,6 +52,16 @@
             display: none;
         }
     </style>
+    <script>
+        // Check if the user is remembered and redirect immediately if true
+        document.addEventListener('DOMContentLoaded', (event) => {
+            if (localStorage.getItem('ageVerified') === 'true') {
+                window.location.href = 'next_page.html';
+            } else {
+                document.getElementById('ageCheck').style.display = 'block';
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -57,38 +69,51 @@
         <div id="ageCheck" class="verification">
             <p>Please enter your age:</p>
             <input type="number" id="ageInput" placeholder="Enter your age">
+            <br>
+            <input type="checkbox" id="rememberMe"> Remember me
+            <br>
             <button onclick="verifyAge()">Submit</button>
         </div>
         <div id="content" class="verification">
-            <p>You are over 18 years old. Enjoy your stay!</p>
-            <a href="next_page.html"><button>Proceed to Site</button></a>
+            <p>Enjoy your stay.</p>
+            <a href="next_page.html" id="nextPageButton"><button>Proceed to Site</button></a>
         </div>
         <div id="underage" class="verification">
             <p>You must be over 18 to access this site.</p>
+            <button onclick="retryAgeVerification()">Go Back</button>
+        </div>
+        <div id="invalidAge" class="verification">
+            <p>Please enter a valid age.</p>
+            <button onclick="retryAgeVerification()">Go Back</button>
         </div>
     </div>
 
     <script>
         function verifyAge() {
             const age = document.getElementById('ageInput').value;
-            if (age >= 18) {
-                localStorage.setItem('ageVerified', 'true');
+            const rememberMe = document.getElementById('rememberMe').checked;
+            if (age >= 18 && age <= 100) {
+                if (rememberMe) {
+                    localStorage.setItem('ageVerified', 'true');
+                    window.location.href = 'next_page.html';
+                } else {
+                    document.getElementById('ageCheck').style.display = 'none';
+                    document.getElementById('content').style.display = 'block';
+                }
+            } else if (age > 100) {
                 document.getElementById('ageCheck').style.display = 'none';
-                document.getElementById('content').style.display = 'block';
+                document.getElementById('invalidAge').style.display = 'block';
             } else {
                 document.getElementById('ageCheck').style.display = 'none';
                 document.getElementById('underage').style.display = 'block';
             }
         }
 
-        document.addEventListener('DOMContentLoaded', (event) => {
-            if (localStorage.getItem('ageVerified') === 'true') {
-                document.getElementById('ageCheck').style.display = 'none';
-                document.getElementById('content').style.display = 'block';
-            } else {
-                document.getElementById('ageCheck').style.display = 'block';
-            }
-        });
+        function retryAgeVerification() {
+            document.getElementById('underage').style.display = 'none';
+            document.getElementById('invalidAge').style.display = 'none';
+            document.getElementById('ageCheck').style.display = 'block';
+        }
     </script>
 </body>
 </html>
