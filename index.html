@@ -75,8 +75,7 @@
             <button onclick="verifyAge()">Submit</button>
         </div>
         <div id="content" class="verification">
-            <p>Enjoy your stay.</p>
-            <a href="next_page.html" id="nextPageButton"><button>Proceed to Site</button></a>
+            <!-- Blank content to avoid showing anything before redirecting -->
         </div>
         <div id="underage" class="verification">
             <p>You must be over 18 to access this site.</p>
@@ -99,6 +98,7 @@
                 } else {
                     document.getElementById('ageCheck').style.display = 'none';
                     document.getElementById('content').style.display = 'block';
+                    window.location.href = 'next_page.html';
                 }
             } else if (age > 100) {
                 document.getElementById('ageCheck').style.display = 'none';
