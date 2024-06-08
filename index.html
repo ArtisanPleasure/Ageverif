@@ -56,7 +56,7 @@
         // Check if the user is remembered and redirect immediately if true
         document.addEventListener('DOMContentLoaded', (event) => {
             if (localStorage.getItem('ageVerified') === 'true') {
-                window.location.href = 'next_page.html';
+                window.location.href = 'https://parrotfish-chrysalis-79d7.squarespace.com';
             } else {
                 document.getElementById('ageCheck').style.display = 'block';
             }
@@ -94,11 +94,11 @@
             if (age >= 18 && age <= 100) {
                 if (rememberMe) {
                     localStorage.setItem('ageVerified', 'true');
-                    window.location.href = 'next_page.html';
+                    window.location.href = 'https://parrotfish-chrysalis-79d7.squarespace.com';
                 } else {
                     document.getElementById('ageCheck').style.display = 'none';
                     document.getElementById('content').style.display = 'block';
-                    window.location.href = 'next_page.html';
+                    window.location.href = 'https://parrotfish-chrysalis-79d7.squarespace.com';
                 }
             } else if (age > 100) {
                 document.getElementById('ageCheck').style.display = 'none';
